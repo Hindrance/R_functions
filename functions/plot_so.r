@@ -18,6 +18,7 @@
     lab.y.offset=0,
     lab.x.offset=0,
     lab.text=1,
+    leg.threshold=0.01, # threshold for fraction of population to plot as legend
     ...
     ){
     
@@ -37,7 +38,9 @@
          
         plot(Embeddings(so, reduction=reduction)[RO,1:2], pch=pch, col=colours[as.factor(so@meta.data[,md])][RO], cex=cex, main=main, ...)
         if(leg==T) {
-          present = levels(as.factor(so@meta.data[RO,md])) %in% as.character(so@meta.data[RO,md])
+          present = as.vector(levels(as.factor(so@meta.data[RO,md])) %in% as.character(so@meta.data[RO,md]) & 
+            (table(as.factor(so@meta.data[RO,md])) / sum(table(as.factor(so@meta.data[RO,md])))) > leg.threshold)
+          
           legend.4(paste(levels(as.factor(so@meta.data[RO,md]))[present], " - ", table(as.factor(so@meta.data[RO,md]))[present], " (", round(100*table(as.factor(so@meta.data[RO,md]))/sum(table(as.factor(so@meta.data[RO,md]))))[present], " %)", sep=""), col=colours[present], pch=16, bty="n")
         }
          

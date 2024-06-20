@@ -27,6 +27,49 @@
    aja.blue <- "#614fff"
    aja.yellow <- "#ffce1f"
    
+# my custom green library:
+  verdant = c(
+    "#020f01",
+    "#192819",
+    "#365126",
+    "#4f7836",
+    "#6d9b40",
+    "#8dbe40",
+    "#aed135",
+    "#c4da4a",
+    "#d8e476",
+    "#eceea2",
+    "#f6f5c5",
+    "#fbfcec"
+  )
+
+
+#    sky = c(
+#          "#2f2236", 
+#          "#845f96", 
+#          "#d163b0", 
+#          "#fea1ba", 
+#          "#fef2f3" 
+#    )
+    
+    desert.dusk = c(
+      "#2F2236",
+      "#513A5C",
+      "#735282",
+      "#935F9B",
+      "#B261A5",
+      "#D163B0",
+      "#E37BB4",
+      "#F594B8",
+      "#FEB1C5",
+      "#FED1DC",
+      "#FEF2F3"
+    )
+    
+  #  desert.dusk = colorRampPalette(sky)(11)
+    
+    
+
 # Heat-like scale   
    Heat <- c(
    "#8e133b",

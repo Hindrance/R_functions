@@ -60,3 +60,53 @@ spectral_clustering <- function(X, # matrix of data points
 
 #      # run kmeans on the 2 eigenvectors
 #      X_sc_kmeans <- kmeans(X_sc, 3)
+
+
+
+
+spectral_clustering <- function(X, # matrix of data points
+                                nn = 10, # the k nearest neighbors to consider
+                                n_eig = 2) # m number of eignenvectors to keep
+                                
+{
+require(dbscan)
+
+   W = matrix(0, dim(X)[1], dim(X)[1])
+     
+   nn.graph = kNN(X, k = nn)
+ 
+  for(i in 1:nrow(W)){
+    W[nn.graph$id[i,],i] = 1
+  } 
+ 
+  graph_laplacian <- function(W, normalized = TRUE)
+  {
+    stopifnot(nrow(W) == ncol(W)) 
+    
+    g = colSums(W) # degrees of vertices
+    n = nrow(W)
+    
+    if(normalized)
+    {
+      D_half = diag(1 / sqrt(g) )
+      return( diag(n) - D_half %*% W %*% D_half )
+    }
+    else
+    {
+      return( diag(g) - W )
+    }
+  }
+  
+
+#  W = mutual_knn_graph(X) # 1. matrix of similarities
+  L = graph_laplacian(W) # 2. compute graph laplacian
+  ei = eigen(L, symmetric = TRUE) # 3. Compute the eigenvectors and values of L
+  n = nrow(L)
+  return(ei$vectors[,(n - n_eig):(n - 1)]) # return the eigenvectors of the n_eig smallest eigenvalues
+
+}
+
+
+
+
+

@@ -17,7 +17,7 @@ require("wordcloud")
 
 ######################################################
 
-  text.overlay <- function(x, y, text, void.x, void.y, freedom=cex, cex=1, colour="black", tbs=F, example=F){
+  text.overlay <- function(x, y, text, void.x, void.y, freedom=cex, cex=1, colour="black", tbs=F, example=F, pos=1){
    if(example==T){
       x <- runif(100,0,1)
       y <- runif(100,0,1)
@@ -54,7 +54,7 @@ require("wordcloud")
     implottable.space = rep(c(freedom,cex), c(length(void.x), length(x)))#*rep(c(0.5,1), c(length(void.x), length(x)))
     #test <- wordlayout(c(void.x, x), c(void.y,y), c(rep("O",length(void.x)), text), cex=implottable.space)
     wordcloud::textplot(c(void.x, x), c(void.y,y),  c(rep("+",length(void.x)), text), new=F, show.lines=F, col=colour.mask, cex=implottable.space,
-    xlim=c(par("usr")[1],par("usr")[2]), ylim=c(par("usr")[3],par("usr")[4]))  
+    xlim=c(par("usr")[1],par("usr")[2]), ylim=c(par("usr")[3],par("usr")[4]), pos=pos)  
   }
   
   

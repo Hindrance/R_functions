@@ -41,60 +41,60 @@ black.divergent = c(
  
  
  
-matrix.plot <- function(matrix2plot, col.scale=Heat, cex.multiplier=3, y.axis=T, x.axis=T, pch=15, cex.axis=1,  round.n = "default", generate.scale=F, aspect=T, ...){ 
+matrix.overlay <- function(matrix2plot, col="black", cex.multiplier=3, y.axis=T, x.axis=T, pch=15, cex.axis=1, generate.scale=F, aspect=T, ...){ 
   # Identify colors for the matrix - very basic
   # Range of colours (equal on either side of zero)
   # First, find how many decimal places to round at
-  if(round.n == "default"){
-   round.n = round(mean(sapply(sample(1:length(matrix2plot), round(0.01*length(matrix2plot))), function(i){decimalplaces_vec(matrix2plot[i])})))
-    if(round.n > 4){round.n = 4}
-  }
+#  if(round.n == "default"){
+#   round.n = round(mean(sapply(sample(1:length(matrix2plot), round(0.01*length(matrix2plot))), function(i){decimalplaces_vec(matrix2plot[i])})))
+#    if(round.n > 4){round.n = 4}
+#  }
   # if both tails exist
-    matrix.values = matrix2plot[!is.na(matrix2plot)]
+#    matrix.values = matrix2plot[!is.na(matrix2plot)]
     
-    if(1 %in% sign(range(matrix.values)) & -1 %in% sign(range(matrix.values))){
-      range.col=c(
-        seq(-max(abs(matrix.values)),0,by=1*10^-round.n),
-        seq(0, max(abs(matrix.values)),by=1*10^-round.n)
-      )
-    }
+#    if(1 %in% sign(range(matrix.values)) & -1 %in% sign(range(matrix.values))){
+#      range.col=c(
+#        seq(-max(abs(matrix.values)),0,by=1*10^-round.n),
+#        seq(0, max(abs(matrix.values)),by=1*10^-round.n)
+#      )
+#    }
    
   # if only a positive tail exists...
-    if(1 %in% sign(range(matrix.values)) & !-1 %in% sign(range(matrix.values))){
-      range.col=seq(0, max(matrix.values),by=1*10^-round.n)
-    }
-    
-  # if only a negative tail exists...
-    if(!1 %in% sign(range(matrix.values)) & -1 %in% sign(range(matrix.values))){
-      range.col=seq(-max(matrix.values),0,by=1*10^-round.n)
-    }
-# Colour mapping matrix     
-  # Dataframe for colours and values
-    col.df= data.frame(
-      colorRampPalette(col.scale)(length(range.col)),
-      range.col
-      )
-      
-     if(generate.scale==T){
-      return(col.df)
-     }
-  # Match the rounded value of the matrix2plot to the colour gradient 
-  #  col.df[match(round(matrix2plot,round.n), col.df[,2]),1]
+#    if(1 %in% sign(range(matrix.values)) & !-1 %in% sign(range(matrix.values))){
+#      range.col=seq(0, max(matrix.values),by=1*10^-round.n)
+#    }
+#    
+#  # if only a negative tail exists...
+#    if(!1 %in% sign(range(matrix.values)) & -1 %in% sign(range(matrix.values))){
+#      range.col=seq(-max(matrix.values),0,by=1*10^-round.n)
+#    }
+## Colour mapping matrix     
+#  # Dataframe for colours and values
+#    col.df= data.frame(
+#      colorRampPalette(col.scale)(length(range.col)),
+#      range.col
+#      )
+#      
+#     if(generate.scale==T){
+#      return(col.df)
+#     }
+#  # Match the rounded value of the matrix2plot to the colour gradient 
+#  #  col.df[match(round(matrix2plot,round.n), col.df[,2]),1]
 
 
 
 
-#  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  
-# Colour matrix
-    if(class(col.scale)[1] == "matrix"){matrix2plot.col = col.scale} else {
-    # Create new matrix of the colours for our function 
-      matrix2plot.col = matrix(
-        col.df[match(as.character(round(matrix2plot,round.n-1)), as.character(round(col.df[,2],round.n-1))),1],
-    #    col.df[match(round(matrix2plot), col.df[,2]),1], 
-        dim(matrix2plot)[1],
-        dim(matrix2plot)[2]
-      )
-   }
+##  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  
+## Colour matrix
+#    if(class(col.scale)[1] == "matrix"){matrix2plot.col = col.scale} else {
+#    # Create new matrix of the colours for our function 
+#      matrix2plot.col = matrix(
+#        col.df[match(as.character(round(matrix2plot,round.n-1)), as.character(round(col.df[,2],round.n-1))),1],
+#    #    col.df[match(round(matrix2plot), col.df[,2]),1], 
+#        dim(matrix2plot)[1],
+#        dim(matrix2plot)[2]
+#      )
+#   }
 
 
   #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  # 
@@ -103,33 +103,40 @@ matrix.plot <- function(matrix2plot, col.scale=Heat, cex.multiplier=3, y.axis=T,
     matrix2plot.cex = matrix(1, dim(matrix2plot)[1],dim(matrix2plot)[2])
 
   # make initial plot
-    plot(c(1, dim(matrix2plot)[2])+2, c(1, dim(matrix2plot)[1]), pch=NA, ... , xaxt="n", yaxt="n", xaxs="i", yaxs="i", ylim=c(0,dim(matrix2plot)[1]+1), xlim=c(0,dim(matrix2plot)[2]+1), bty="n", asp=aspect)
+#    plot(c(1, dim(matrix2plot)[2])+2, c(1, dim(matrix2plot)[1]), pch=NA, ... , xaxt="n", yaxt="n", xaxs="i", yaxs="i", ylim=c(0,dim(matrix2plot)[1]+1), xlim=c(0,dim(matrix2plot)[2]+1), bty="n", asp=aspect)
 
   # plot points from matrix.
-     points(rep(1:dim(matrix2plot)[2], each=dim(matrix2plot)[1]),  rep(dim(matrix2plot)[1]:1,dim(matrix2plot)[2]),
+#     points(rep(1:dim(matrix2plot)[2], each=dim(matrix2plot)[1]),  rep(dim(matrix2plot)[1]:1,dim(matrix2plot)[2]),
+#      cex = matrix2plot.cex*cex.multiplier,
+#      col = matrix2plot.col,
+#      pch=pch
+#     )
+    text(
+     rep(1:dim(matrix2plot)[2], each=dim(matrix2plot)[1]), 
+     rep(dim(matrix2plot)[1]:1,dim(matrix2plot)[2]),
+      labels=matrix2plot,
       cex = matrix2plot.cex*cex.multiplier,
-      col = matrix2plot.col,
-      pch=pch
+      col = col,
+      ...
      )
-
 #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  
 # plot axes and labels
-if(y.axis==T){
-  axis(2,
-      at=dim(matrix2plot)[1]:1,
-      labels=rownames(matrix2plot),
-      las=2,
-      cex.axis=cex.axis
-    ) 
-}
-if(x.axis==T){    
-  axis(3,
-      at=1:dim(matrix2plot)[2],
-      labels=colnames(matrix2plot),
-      las=2,
-      cex.axis=cex.axis
-    ) 
-}
+#if(y.axis==T){
+#  axis(2,
+#      at=dim(matrix2plot)[1]:1,
+#      labels=rownames(matrix2plot),
+#      las=2,
+#      cex.axis=cex.axis
+#    ) 
+#}
+#if(x.axis==T){    
+#  axis(3,
+#      at=1:dim(matrix2plot)[2],
+#      labels=colnames(matrix2plot),
+#      las=2,
+#      cex.axis=cex.axis
+#    ) 
+#}
 # end?
 }
 
